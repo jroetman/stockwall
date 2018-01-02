@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="stocklist">
+        <item>spy</item>
+        <item>Twitter</item>
+        <item>McDonalds</item>
+    </string-array>
+    <string-array name="stocklistValues">
+        <item>spy</item>
+        <item>twtr</item>
+        <item>mcd</item>
+    </string-array>
+</resources>

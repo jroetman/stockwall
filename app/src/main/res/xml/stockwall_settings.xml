@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:title="@string/stockwall_settings"
+
+    android:key="stockwall_settings">
+
+    <ListPreference
+
+        android:key="stockall_testpattern"
+
+        android:title="@string/stockwall_settings_title"
+
+        android:summary="@string/stockwall_settings_summary"
+
+        android:entries="@array/stocklist"
+
+        android:entryValues="@array/stocklistValues"/>
+    <CheckBoxPreference android:key="stockwall_movement"
+
+        android:summary="@string/stockwall_movement_summary"
+
+        android:title="test"
+
+        android:summaryOn="Moving test pattern"
+
+        android:summaryOff="Still test pattern"/>
+</PreferenceScreen>
