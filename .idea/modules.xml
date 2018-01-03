@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Stockwall.iml" filepath="$PROJECT_DIR$/Stockwall.iml" />
+      <module fileurl="file://C:\Users\roetmanj\dev\github\stockwall\Stockwall.iml" filepath="C:\Users\roetmanj\dev\github\stockwall\Stockwall.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\roetmanj\dev\github\stockwall\app\app.iml" filepath="C:\Users\roetmanj\dev\github\stockwall\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stockwall.iml" filepath="$PROJECT_DIR$/stockwall.iml" />
     </modules>
   </component>
 </project>
