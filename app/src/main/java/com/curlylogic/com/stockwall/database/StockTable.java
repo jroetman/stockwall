@@ -33,8 +33,8 @@ public class StockTable extends SQLiteOpenHelper {
     public static final String COL_SYMBOL = "SYMBOL";
     public static final String COL_DATA = "DATA";
 
-    private static final String DATABASE_NAME = "STOCKS";
-    private static final String FTS_VIRTUAL_TABLE = "FTS";
+    private static final String DATABASE_NAME = "STOCKWALL";
+    private static final String FTS_VIRTUAL_TABLE = "STOCKS";
     private static final int DATABASE_VERSION = 1;
 
     private static final String FTS_TABLE_CREATE =
