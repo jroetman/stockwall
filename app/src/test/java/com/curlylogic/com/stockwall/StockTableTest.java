@@ -16,6 +16,7 @@ import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static org.junit.Assert.*;
 
 
+import com.android.volley.BuildConfig;
 import com.curlylogic.com.stockwall.database.StockQuote;
 import com.curlylogic.com.stockwall.database.StockTable;
 import com.curlylogic.com.stockwall.datasource.AlphaVantage;

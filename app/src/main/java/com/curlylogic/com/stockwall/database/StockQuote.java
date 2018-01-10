@@ -42,5 +42,12 @@ public class StockQuote {
 
     private String timestamp;
 
+    public String toString(){
+        return  getTimestamp() + "," +
+                getSymbol() + "," +
+                getPrice() + "," +
+                getVolume();
+    }
+
 
 }

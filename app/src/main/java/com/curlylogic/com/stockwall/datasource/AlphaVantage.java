@@ -13,12 +13,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.curlylogic.com.stockwall.R;
 import com.curlylogic.com.stockwall.database.StockQuote;
 import com.curlylogic.com.stockwall.database.StockTable;
+import com.curlylogic.stockwall.R;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jon on 12/31/17.
@@ -40,8 +42,8 @@ public class AlphaVantage {
     public StockQuote readQuote(JsonReader reader){
         StockQuote sq = new StockQuote();
         try {
+            reader.beginArray();
             reader.beginObject();
-
             while (reader.hasNext()) {
                 String name = reader.nextName();
                 if (name.equals("1. symbol")) {
@@ -64,8 +66,9 @@ public class AlphaVantage {
         return sq;
     }
 
-    public void getData(String symbols) {
-        String query = "query?function=BATCH_STOCK_QUOTES&symbols=" + symbols + "&apikey="+ AV_API_KEY;
+    public void getData(String[] symbols) {
+        String symbolString = android.text.TextUtils.join(",", symbols);
+        String query = "query?function=BATCH_STOCK_QUOTES&symbols=" + symbolString + "&apikey="+ AV_API_KEY;
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, AV_HOST_API + query,
@@ -76,13 +79,23 @@ public class AlphaVantage {
                     JsonReader reader = new JsonReader(new StringReader(response));
                     try {
                         reader.beginObject();
+
                         while (reader.hasNext()) {
                             String name = reader.nextName();
-                            if (name.equals("Stock Quotes")) {
+                            if (!name.equals("Stock Quotes")) {
+                                reader.skipValue();
+                              //  reader.endObject();
+
+                            } else {
                                 StockQuote sq = readQuote(reader);
                                 upsertSymbol(sq);
                             }
+
+
                         }
+                        reader.endObject();
+
+
                         reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -102,6 +115,7 @@ public class AlphaVantage {
 
 
     public long upsertSymbol(StockQuote sq) {
+        System.out.println(sq.toString());
         ContentValues initialValues = new ContentValues();
         initialValues.put(StockTable.COL_SYMBOL, sq.getSymbol());
         StringBuffer sb = new StringBuffer();

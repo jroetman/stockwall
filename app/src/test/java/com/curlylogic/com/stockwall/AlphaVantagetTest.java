@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.JsonReader;
 
+import com.android.volley.BuildConfig;
 import com.android.volley.Cache;
 import com.android.volley.toolbox.StringRequest;
 import com.curlylogic.com.stockwall.database.StockQuote;
@@ -56,12 +57,6 @@ public class AlphaVantagetTest {
 
     }
 
-    @Test
-    public void getData() throws Exception {
-
-
-
-    }
 
 
 }

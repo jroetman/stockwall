@@ -1,6 +1,8 @@
 package com.curlylogic.com.stockwall;
 
+import android.app.Application;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -14,9 +16,24 @@ import android.service.wallpaper.WallpaperService;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
+import com.curlylogic.com.stockwall.database.StockDAO;
+import com.curlylogic.com.stockwall.database.StockQuote;
+import com.curlylogic.com.stockwall.database.StockTable;
+import com.curlylogic.com.stockwall.datasource.AlphaVantage;
+import com.curlylogic.stockwall.R;
+
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyService extends WallpaperService {
+
+
+    public MyService(){
+
+
+
+    }
 
     @Override
     public Engine onCreateEngine() {
@@ -29,7 +46,12 @@ public class MyService extends WallpaperService {
         private Paint paint = new Paint();
         private int width;
         private boolean visible = true;
-        private float textSize = 30f;
+        private float textSize = 10f;
+        private StockTable st = new StockTable(getApplicationContext());
+        private List<StockQuote> currentQuotes = new ArrayList<StockQuote>();
+        private StockDAO sDAO = new StockDAO(st);
+
+
         private final Runnable drawRunner = new Runnable() {
             @Override
             public void run() {
@@ -37,18 +59,19 @@ public class MyService extends WallpaperService {
             }
 
         };
-        private String stockname = "SPY";
-        private boolean touchEnabled;
-
-        Resources res = getResources();
-        String[] stocks = res.getStringArray(R.array.stocklistValues);
 
         public MyWallpaperEngine() {
+            AlphaVantage av = new AlphaVantage(getApplicationContext());
 
-            paint.setAntiAlias(true);
-            paint.setColor(Color.WHITE);
+            Resources res = getResources();
+            String[] stocks = res.getStringArray(R.array.stocklistValues);
+            av.getData(stocks);
+
+            paint.setColor(Color.BLACK);
             paint.setStyle(Paint.Style.FILL);
-            paint.setTextSize(textSize);
+
+            //TODO, add this to a fixed schedule
+             currentQuotes = sDAO.getQuotes();
 
             handler.post(drawRunner);
         }
@@ -80,33 +103,22 @@ public class MyService extends WallpaperService {
 
         @Override
         public void onTouchEvent(MotionEvent event) {
-            if (touchEnabled) {
 
-                float x = event.getX();
-                float y = event.getY();
-                SurfaceHolder holder = getSurfaceHolder();
-                Canvas canvas = null;
-                try {
-                    canvas = holder.lockCanvas();
-                    if (canvas != null) {
-
-                    }
-                } finally {
-                    if (canvas != null)
-                        holder.unlockCanvasAndPost(canvas);
-                }
-                super.onTouchEvent(event);
-            }
         }
+
 
         private void draw() {
             SurfaceHolder holder = getSurfaceHolder();
             Canvas canvas = null;
             try {
                 canvas = holder.lockCanvas();
+
                 if (canvas != null) {
-                    for(int i = 0; i < stocks.length; i++) {
-                        canvas.drawText(stocks[i], 100, 200 + (i * textSize), paint);
+                    canvas.drawColor(Color.WHITE);
+                    paint.setTextSize(20);
+
+                    for(int i = 0; i < currentQuotes.size(); i++) {
+                        canvas.drawText(currentQuotes.toString(), 100, 200 + (i * textSize), paint);
                     }
                 }
             } finally {

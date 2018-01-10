@@ -15,7 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.curlylogic.com.stockwall.R;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
